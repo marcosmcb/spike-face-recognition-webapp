@@ -15,6 +15,8 @@ emotions = ('angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral')
 
 model = None
 graph = None
+MODEL_FILE = "./utils/models/facial_expression_model_structure.json"
+WEIGHTS_FILE = "./utils/models/facial_expression_model_weights.h5"
 
 
 def load_model():
@@ -25,8 +27,8 @@ def load_model():
     Save graph after loading the weights
     """
     global model
-    model = model_from_json(open("./utils/models/facial_expression_model_structure.json", "r").read())      
-    model.load_weights('./utils/models/facial_expression_model_weights.h5')  
+    model = model_from_json(open(MODEL_FILE, "r").read())      
+    model.load_weights( WEIGHTS_FILE )  
     global graph
     graph = tf.get_default_graph()
 

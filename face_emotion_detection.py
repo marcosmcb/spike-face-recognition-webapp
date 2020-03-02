@@ -2,8 +2,8 @@ import face_recognition
 import cv2
 import time
 from utils.helper_functions import get_frames, display_results
-from utils.face_recognition import get_faces, recognise_faces, load_face_arrays
-from utils.emotion_detection import load_model, detect_emotions
+from ml.face_detection import get_faces, recognise_faces, load_face_arrays
+from ml.emotion_detection import load_model, detect_emotions
 
 
 def detect(socketio):

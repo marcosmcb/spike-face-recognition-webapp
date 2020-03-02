@@ -6,7 +6,9 @@ from utils.helper_functions import get_facename
 IMAGE_DIR = "./utils/images/"
 
 def load_face_arrays():
-    # Create arrays of known face encodings and their names
+    """
+    Create arrays of known face encodings and their names
+    """
     known_face_encodings = []
     known_face_names = []
     
