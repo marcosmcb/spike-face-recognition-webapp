@@ -37,27 +37,10 @@
             // section of the page.
             function getRandomInt(max) {
                return Math.floor(Math.random() * Math.floor(max));
-            }
-
-            var friendlyNames = ["Pet", "Mate", "Buddy", "Bro", "My Friend", "Friend", "Amigo", "Pal", "Bud"];
-
-            socket.on('response', function(msg, cb) {
-
-                var name = msg.data;
-                var emotion = msg.emotion;
+            };
 
 
-                if(name === "Unknown") {
-                    name = friendlyNames[ getRandomInt(friendlyNames.length) ]
-                }
-
-                var phrase = ""
-                if(emotion === "" || String(emotion).trim() === "") {
-                    phrase = "How are you feeling today?";
-                } else {
-                    phrase = "Are you feeling " + String(emotion).toUpperCase() + " today?";
-                }
-
+            function setBackgroundColor(emotion) {
                 $("#studio").removeClass();
                 switch(String(emotion)) {
                     case "happy":
@@ -73,7 +56,30 @@
                         $('#studio').addClass('indigo lighten-2');
                         break;
                 }
+            };
 
+            function getPhrase(emotion) {
+                var phrase = ""
+                if(emotion === "" || String(emotion).trim() === "") {
+                    phrase = "How are you feeling today?";
+                } else {
+                    phrase = "Are you feeling " + String(emotion).toUpperCase() + " today?";
+                }
+                return phrase;
+            };
+
+            var friendlyNames = ["Pet", "Mate", "Buddy", "Bro", "My Friend", "Friend", "Amigo", "Pal", "Bud"];
+
+            socket.on('response', function(msg, cb) {
+                var name = msg.data;
+                var emotion = msg.emotion;
+
+                if(name === "Unknown") {
+                    name = friendlyNames[ getRandomInt(friendlyNames.length) ]
+                }
+
+                const phrase = getPhrase(emotion)
+                setBackgroundColor(emotion);
                 
                 var obj = $('#log').text("Hi " + name + "!" + "\n\n" + phrase);
                 obj.html(obj.html().replace(/\n/g,'<br/>'));
