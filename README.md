@@ -46,8 +46,7 @@ For your pictures ott be picked up correctly by the face recognition model, you 
 
 ## See it working
 
-![](./docs/example.gif)
-
+![Alt Text](docs/example.gif)
 
 
 ## Libraries
