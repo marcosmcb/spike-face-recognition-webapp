@@ -27,7 +27,6 @@ def get_frames(video):
 
 def display_results(frame, face_locations, face_names, emotion, socketio):
     # Display the results
-    count = 0
     for (top, right, bottom, left), name in zip(face_locations, face_names):
         # Scale back up face locations since the frame we detected in was scaled to 1/4 size
         top *= 4
@@ -42,5 +41,4 @@ def display_results(frame, face_locations, face_names, emotion, socketio):
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(frame, name + "   " + emotion, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
-        count += 1
-        socketio.emit('my_response', {'data': name, 'emotion': emotion, 'count': count},  namespace='/test')
+        socketio.emit('response', {'data': name, 'emotion': emotion},  namespace='/studio')
