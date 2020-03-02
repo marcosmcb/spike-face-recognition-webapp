@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Studio Buddy</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+    <script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            // Use a "/test" namespace.
+            // An application can open a connection on multiple namespaces, and
+            // Socket.IO will multiplex all those connections on a single
+            // physical channel. If you don't care about multiple channels, you
+            // can set the namespace to an empty string.
+            namespace = '/test';
+
+            // Connect to the Socket.IO server.
+            // The connection URL has the following format, relative to the current page:
+            //     http[s]://<domain>:<port>[/<namespace>]
+            var socket = io(namespace);
+
+            // Event handler for new connections.
+            // The callback function is invoked when a connection with the
+            // server is established.
+            socket.on('connect', function() {
+                socket.emit('my_event', {data: 'I\'m connected!'});
+            });
+
+            // Event handler for server sent data.
+            // The callback function is invoked whenever the server emits data
+            // to the client. The data is then displayed in the "Received"
+            // section of the page.
+            function getRandomInt(max) {
+               return Math.floor(Math.random() * Math.floor(max));
+            }
+
+            var friendlyNames = ["Pet", "Mate", "Buddy", "Bro", "My Friend", "Friend", "Amigo", "Pal", "Bud"];
+
+            socket.on('my_response', function(msg, cb) {
+
+                var name = msg.data;
+                var emotion = msg.emotion;
+
+
+                if(name === "Unknown") {
+                    name = friendlyNames[ getRandomInt(friendlyNames.length) ]
+                }
+
+                var phrase = ""
+                if(emotion === "" || String(emotion).trim() === "") {
+                    phrase = "How are you feeling today?";
+                } else {
+                    phrase = "Are you feeling " + String(emotion).toUpperCase() + " today?";
+                }
+
+                $("#studio").removeClass();
+                switch(String(emotion)) {
+                    case "happy":
+                        $('#studio').addClass('amber darken-3');
+                        break;
+                    case "surprise":
+                        $('#studio').addClass('green darken-2');
+                        break;
+                    case "neutral":
+                        $('#studio').addClass('teal accent-3');
+                        break;
+                    default:
+                        $('#studio').addClass('indigo lighten-2');
+                        break;
+                }
+
+                
+                var obj = $('#log').text("Hi " + name + "!" + "\n\n" + phrase);
+                obj.html(obj.html().replace(/\n/g,'<br/>'));
+
+                if (cb)
+                    cb();
+            });
+        });
+    </script>
+</head>
+<body class="indigo lighten-2" id="studio">
+    <div class="container">
+        <h1 class="white-text">Studio Buddy</h1>
+        <h2 class="white-text" id="log">
+        </h2>
+    </div>
+</body>
+</html>
