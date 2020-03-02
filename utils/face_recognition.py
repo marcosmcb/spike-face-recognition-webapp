@@ -1,20 +1,28 @@
+import os
 import face_recognition
 import numpy as np
+from utils.helper_functions import get_facename
 
+IMAGE_DIR = "./utils/images/"
 
 def load_face_arrays():
-    # # Load a second sample picture and learn how to recognize it.
-    marcos_image = face_recognition.load_image_file("./utils/images/Marcos.png")
-    marcos_face_encoding = face_recognition.face_encodings(marcos_image)[0]
-
     # Create arrays of known face encodings and their names
-    known_face_encodings = [ marcos_face_encoding ]
-    known_face_names = [ "Marcos" ]
+    known_face_encodings = []
+    known_face_names = []
+    
+    for filename in os.listdir(IMAGE_DIR):
+        image = face_recognition.load_image_file(os.path.join(IMAGE_DIR, filename))
+        face_encoding = face_recognition.face_encodings(image)[0]
+        known_face_encodings.append(face_encoding)
+        known_face_names.append(get_facename(filename))
+        
     return (known_face_encodings, known_face_names)
 
 
 def get_faces(rgb_frame, face_locations):
-    # Find all the faces and face encodings in the current frame of video
+    """
+    Find all the faces and face encodings in the current frame of video
+    """
     face_locations = face_recognition.face_locations(rgb_frame)
     face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
     return (face_locations, face_encodings)

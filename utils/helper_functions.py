@@ -1,6 +1,18 @@
 import cv2
 
 
+def get_facename(filename):
+    """
+    Get name of the face from filename.
+    If, for instance, we have the following filenames, the function returns:
+    obama.png ----> obama
+    obama_1.png --> obama
+    obama_2.png --> obama
+    """
+    filename_without_extension = filename.split(".")[0]
+    face_name = filename_without_extension.split("_")[0]
+    return face_name
+
 def get_frames(video):
     # Grab a single frame of video
     ret, frame = video.read()
