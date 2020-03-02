@@ -2,21 +2,15 @@ import face_recognition
 import cv2
 import time
 from utils.helper_functions import get_frames, display_results
-from utils.face_recognition import get_faces, recognise_faces
+from utils.face_recognition import get_faces, recognise_faces, load_face_arrays
 from utils.emotion_detection import load_model, detect_emotions
 
 
 def detect(socketio):
     load_model()
-    # # Load a second sample picture and learn how to recognize it.
-    marcos_image = face_recognition.load_image_file("./utils/images/marcos_2.png")
-    marcos_face_encoding = face_recognition.face_encodings(marcos_image)[0]
-
-    # Create arrays of known face encodings and their names
-    known_face_encodings = [ marcos_face_encoding ]
-    known_face_names = [ "Marcos" ]
-
+    
     # Initialize some variables
+    known_face_encodings, known_face_names = load_face_arrays()
     face_locations = []
     face_encodings = []
     face_names = []
