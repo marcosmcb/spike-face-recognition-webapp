@@ -1,3 +1,5 @@
+
+
 # Face Recognition and Mood Detection WebApp
 
 This repository contains a web application developed using the [Flask-SocketIO](http://flask-socketio.readthedocs.io/en/latest/) web framework to ease the development of a web app using the SocketIO communication protocol with a Python backend and the frontend.
@@ -8,6 +10,11 @@ For Mood Detection, I've used [Keras](https://keras.io/) with a [Tensorflow](htt
 This project uses [Python 3](https://docs.python.org/3/) in the backend for everything.
 
 ## Installation
+
+### Requirements
+
+  * Python 3.3+
+  * OpenCV
 
 You will need to install OpenCV in your system (to do the video captture and detection of a face). Refer to your system's particular install.
 
@@ -27,6 +34,21 @@ python3 app.py
 
 The script will access your webcam and run the Flask-SocketIO web app on it.
 It'll display at ```http://127.0.0.1:5000/``` the name of the person, if recognised, followed by their detected emotion.
+
+## Using your own Image Dataset
+
+If you want to use your own dataset of images, just add them to the folder:
+
+``` ./utils/images/ ```
+
+For your pictures ott be picked up correctly by the face recognition model, you should follow a name format.
+
+
+## See it working
+
+![](./docs/example.gif)
+
+
 
 ## Libraries
 
