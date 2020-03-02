@@ -13,10 +13,6 @@ thread = None
 thread_lock = Lock()
 
 
-def get_socketio():
-    
-    return socketio
-
 def background_thread():
     """Example of how to send server generated events to clients."""
     detect(socketio)
@@ -28,6 +24,7 @@ def index():
 @socketio.on('my event')
 def test_message(message):
     emit('my response', {'data': 'got it!'})
+
 
 @socketio.on('connect', namespace='/test')
 def test_connect():

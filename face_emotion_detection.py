@@ -7,7 +7,8 @@ from keras.preprocessing.image import img_to_array
 from keras.applications import imagenet_utils
 import tensorflow as tf
 import time
-from utils.helper_functions import get_frames, faces, recognise_faces, display_results
+from utils.helper_functions import get_frames, display_results
+from utils.face_recognition import get_faces, recognise_faces
 from keras.models import model_from_json
 
 #-----------------------------
@@ -17,12 +18,7 @@ emotions = ('angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral')
 #-----------------------------
 model = None
 graph = None
-# def get_model():
-#     global model
-#     if model == None:
-        
-#         model.load_weights('./utils/models/facial_expression_model_weights.h5') #load weights
-#     return model
+
     
 def load_model():
     # load the pre-trained Keras model (here we are using a model
@@ -79,13 +75,15 @@ def detect(socketio):
     face_encodings = []
     face_names = []
     process_this_frame = True
+    
     # Get a reference to webcam #0 (the default one)
     video_capture = cv2.VideoCapture(0)
+    
     while True:
         
         frame, rgb_small_frame, gray_frame = get_frames(video_capture)   
         if process_this_frame:
-            face_locations, face_encodings = faces(rgb_small_frame, frame)
+            face_locations, face_encodings = get_faces(rgb_small_frame, frame)
             face_names = recognise_faces(face_encodings, known_face_encodings, known_face_names)
             emotion = get_emotions(gray_frame, frame)
             emotion = emotion if emotion != None else " "
@@ -93,12 +91,7 @@ def detect(socketio):
 
         display_results(frame, face_locations, face_names, emotion, socketio)
         socketio.sleep(1)
-        # # Display the resulting image
-        # cv2.imshow('Video', frame)
-
-        # # Hit 'q' on the keyboard to quit!
-        # if cv2.waitKey(1) & 0xFF == ord('q'):
-        #     break
+        
 
     # Release handle to the webcam
     video_capture.release()
