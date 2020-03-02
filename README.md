@@ -16,8 +16,8 @@ You can install the libraries for this project by running:
 pip install -r requirements.txt
 ```
 
-The script will access your webcam and run thte Flask-SocketIO web app on it.
-It'll display at ```http://127.0.0.1:5000/``` the name of the person, if recognised, followed by their detectted emotion.
+The script will access your webcam and run the Flask-SocketIO web app on it.
+It'll display at ```http://127.0.0.1:5000/``` the name of the person, if recognised, followed by their detected emotion.
 
 ## License
 
