@@ -18,14 +18,16 @@ graph = None
 
 
 def load_model():
-    # load the pre-trained Keras model (here we are using a model
-    # pre-trained on ImageNet and provided by Keras, but you can
-    # substitute in your own networks just as easily)
+    """
+    Load the pre-trained Keras model (here we are using a model
+    Pre-trained on the dataset provided by Kaggle, but you can
+    Substitute in your own networks just as easily)
+    Save graph after loading the weights
+    """
     global model
     model = model_from_json(open("./utils/models/facial_expression_model_structure.json", "r").read())      
     model.load_weights('./utils/models/facial_expression_model_weights.h5')  
     global graph
-    # save graph after loading ResNet50 weights
     graph = tf.get_default_graph()
 
 
