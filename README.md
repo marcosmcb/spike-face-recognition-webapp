@@ -46,7 +46,7 @@ For your pictures ott be picked up correctly by the face recognition model, you 
 
 ## See it working
 
-![Alt Text](docs/example.gif)
+![Example](https://github.com/marcosmcb/spike-face-recognition-webapp/blob/master/docs/example.gif)
 
 
 ## Libraries
